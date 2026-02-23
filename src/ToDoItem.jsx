@@ -1,20 +1,24 @@
 import styles from "./ToDoItem.module.css"
 
-export const ToDoItem = ({task,index, onDelete}) => {
-
+export const ToDoItem = ({ taskObj, onDelete, onToggle }) => {
   const deleteTask = () => {
-  onDelete(index);  
-  }
- 
-    return (
-      <div className={styles.item}>
-        <div className={styles.left}>
-          <input type="checkbox" />
-          <span>{task}</span>
-        </div>
+    onDelete(taskObj.id);
+  };
 
-        <button className={styles.dlbtn} onClick={deleteTask}>Delete</button>
+  return (
+    <div className={styles.item}>
+      <div className={styles.left}>
+        <input
+          type="checkbox"
+          checked={taskObj.done}
+          onChange={() => onToggle(taskObj.id)}
+        />
+        <span>{taskObj.text}</span>
       </div>
-    );
 
-}
+      <button className={styles.dlbtn} onClick={deleteTask}>
+        Delete
+      </button>
+    </div>
+  );
+};

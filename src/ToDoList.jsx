@@ -1,18 +1,38 @@
 import styles from "./ToDoList.module.css";
 
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { ToDoInput } from "./ToDoInput";
 import { ToDoItem } from "./ToDoItem";
-
 export const ToDoList = () => {
-  const [tasks, setTasks] = useState([]);
+  const [tasks, setTasks] = useState(() => {
+    const savedTasks = localStorage.getItem("tasks");
+    return savedTasks ? JSON.parse(savedTasks) : [];
+  });
 
-  const addTask = (newTask) => {
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
+
+  const addTask = (taskText) => {
+    const newTask = {
+      id: Date.now(),
+      text: taskText,
+      done: false,
+    };
+
     setTasks([...tasks, newTask]);
   };
 
-  const deleteTask = (indexToDelete) => {
-    setTasks(tasks.filter((_, index) => index !== indexToDelete));
+  const deleteTask = (idToDelete) => {
+    setTasks(tasks.filter((task) => task.id !== idToDelete));
+  };
+
+  const toggleTask = (idToToggle) => {
+    setTasks(
+      tasks.map((task) =>
+        task.id === idToToggle ? { ...task, done: !task.done } : task,
+      ),
+    );
   };
 
   return (
@@ -22,12 +42,12 @@ export const ToDoList = () => {
       {tasks.length === 0 ? (
         <p>No Tasks Yet</p>
       ) : (
-        tasks.map((task, index) => (
+        tasks.map((task) => (
           <ToDoItem
-            key={index}
-            task={task}
-            index={index}
+            key={task.id}
+            taskObj={task}
             onDelete={deleteTask}
+            onToggle={toggleTask}
           />
         ))
       )}
