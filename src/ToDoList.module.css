@@ -28,3 +28,8 @@ p {
     color: lightblue;
     text-align: center;
 }
+@media (max-width: 480px) {
+  p {
+    font-size: 20px;  
+  }
+}
