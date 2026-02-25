@@ -1,22 +1,13 @@
+import { ToDoList } from "./ToDoList";
 
-import { ToDoList } from './ToDoList'
-
-
-import './App.css'
+import "./App.css";
 
 function App() {
- 
-
   return (
-    <>
-      <div>
-      
-       <ToDoList tasks={""} />
-      
-      </div>
-      
-    </>
-  )
+    <div className="app">
+      <ToDoList tasks={""} />
+    </div>
+  );
 }
 
-export default App
+export default App;
