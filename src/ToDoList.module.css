@@ -24,6 +24,7 @@ button {
     white-space: nowrap;
 }
 p {
-    font-size: 30px;
+    font-size: 40px;
     color: lightblue;
+    text-align: center;
 }
